@@ -1,0 +1,53 @@
+
+#include "simpletools.h"
+#include "ping.h"
+#include "abdrive.h"
+
+long double irLeft, irRight;
+long double const c = 65.4544;
+long double const a = 0.000148945;
+long double const k = 506667;
+
+int main()
+{
+    low(26);
+    low(27);
+    
+    drive_goto(1,1);
+    
+    while(1)
+    {
+        irLeft = 0;                                     // <- add
+        irRight = 0;                                    // <- add
+        
+        for(int dacVal = 0; dacVal < 160; dacVal += 8)  // <- add
+        {                                               // <- add
+            dac_ctr(26, 0, dacVal);                       // <- add
+            freqout(11, 1, 38000);                        // <- add
+            irLeft += input(10);                          // <- modify
+            
+            dac_ctr(27, 1, dacVal);                       // <- add
+            freqout(1, 1, 38000);
+            irRight += input(2);                          // <- modify
+        }                                               // <- add
+        
+        if (ping_cm(8) < 10) {
+            drive_goto(-1,-1);
+            break;
+        }
+        
+        long double LW_Scalar = (pow((2.32576 * pow(10, 6) * sqrt((8.45178 * pow(10, 16) * irLeft * irLeft) - (1.70292 * pow(10, 18) * irLeft) + (8.58517 * pow(10, 18))) + (6.76143 * pow(10, 14) * irLeft) - (6.81168 * pow(10, 15))), 1./3.));
+        long double RW_Scalar = pow(2.32576 * pow(10, 6) * sqrt( (8.45178 * pow(10, 16) * irLeft * irLeft) - (1.67779 * pow(10, 18) * irLeft) + (8.33389 * pow(10, 18))) - (6.76143 * pow(10, 14) * irLeft) + (6.71117 * pow(10, 15)), 1./3.);
+        
+        long double LW_Speed = c + (a*LW_Scalar) - (k/LW_Scalar);
+        long double RW_Speed = c + (a*RW_Scalar) - (k/LW_Scalar);
+        
+        print("%c irLeft = %f, irRight = %f%c\n",         // <- modify
+              HOME,   irLeft, irRight, CLREOL);        // <- modify
+        
+        print("left wheel = %f, right wheel = %f", ((irLeft-15)/0.078125)*-1, (irLeft-5)/0.078125);
+        //    drive_speed(x - (2.8*irLeft)+38, y - (irRight*2)+40);
+        
+        
+    }
+}
