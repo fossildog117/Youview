@@ -1,0 +1,23 @@
+<ion-view title="Profile" id="page2" ng-controller="profileCtrl">
+  <ion-nav-buttons side="right">
+    <a class="button button-icon icon" ui-sref="tabsController.editProfile">Edit</a>
+  </ion-nav-buttons>
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <div class="list card">
+      <div class="item item-avatar">
+        <img src={{this.data.pictureUrl}} alt="No picture available" style="width: 50px;height: 50px;">
+        <h2>{{this.data["firstName"]}} {{this.data["lastName"]}}</h2>
+        <p>November 05, 1955</p>
+      </div>
+      <div class="item item-body">
+        <p>About me: {{this.data["aboutMe"]}}</p>
+        <p>Institution: {{this.data.currentUniversity}}</p>
+        <p>Course: {{this.data.currentCourse}}</p>
+        <p>
+          <a class="subdued"> Average rating: {{this.data["averageRating"]}} </a>
+        </p>
+      </div>
+    </div>
+    <a ui-sref="login" id="log-out-button" class="button button-assertive  button-block">Log out</a>
+  </ion-content>
+</ion-view>
