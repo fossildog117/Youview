@@ -1,6 +1,0 @@
--AxX[xy] is a negated formula.  The formula -AxX[xy] is true in G under W
--AxX[xx] is a negated formula.  The formula -AxX[xx] is false in G under W
-AxEyX[xy] is a universal formula.  The formula AxX[xy] is true in G under W
-Ax(X[xx]>-AyX[xy]) is a universal formula.  The formula Ax(X[xx]>-AyX[xy]) is false in G under W
-(X[xy]vX[yx]) is a binary connective formula.  The formula (X[xy]vX[yx]) is true in G under W
-(X[xy]vX[yx]) is a binary connective formula.  The formula (X[xy]vX[yx]) is false in G under W
